@@ -1,7 +1,7 @@
 <script setup>
     import { RouterLink } from 'vue-router'
     import CardItemComponent from '@/components/CardItemComponent.vue'
-    import { db } from '../database.js'
+    import { db } from '@/database.js'
 </script>
 
 <script>
