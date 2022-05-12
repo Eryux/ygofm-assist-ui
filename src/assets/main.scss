@@ -1,0 +1,62 @@
+body {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    background: #222;
+    position: relative;
+}
+
+html {
+    height: -webkit-fill-available;
+}
+
+main {
+    display: flex;
+    flex-wrap: nowrap;
+
+    .breadcrumb
+    {
+        margin: 0;
+
+        a {
+            padding: 0;
+        }
+    }
+}
+
+.sidebar
+{
+    width: 280px;
+    box-shadow: 0 0 1rem black;
+    top: 0;
+    bottom: 0;
+    position: fixed;
+}
+
+section
+{
+    margin: 1rem 40px 1rem 320px;
+    width: 100%;
+
+    p {
+        margin-bottom: 0.5rem;
+    }
+}
+
+.card
+{
+    .card-number
+    {
+        background: black;
+        border-radius: 0.25rem 0 0 0.25rem;
+    }
+
+    .card-picture
+    {
+        padding: 1rem;
+
+        img
+        {
+            width:140px;
+        }
+    }
+}
