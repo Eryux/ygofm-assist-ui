@@ -116,7 +116,7 @@
         <div class="col-md-3 col-8">
             <div class="input-group">
                 <span class="input-group-text"><i class="fa fa-sort"></i></span>
-                <select class="form-select form-select-lg" v-model="sort" @change="refreshSort" aria-label=".form-select-lg example">
+                <select class="form-select form-select-lg" v-model="sort" @change="refreshSort">
                     <option value="id">Number</option>
                     <option value="name">Name</option>
                     <option value="type">Type</option>
@@ -128,7 +128,7 @@
         </div>
         <div class="col-md-2 col-4">
             <div class="input-group">
-                <select class="form-select form-select-lg" v-model="sort_order" @change="refreshSort" aria-label=".form-select-lg example">
+                <select class="form-select form-select-lg" v-model="sort_order" @change="refreshSort">
                     <option value="asc">Asc.</option>
                     <option value="desc">Desc.</option>
                 </select>

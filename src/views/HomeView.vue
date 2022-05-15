@@ -1,7 +1,15 @@
 <script setup>
-import TheWelcome from '@/components/TheWelcome.vue'
+
 </script>
 
 <template>
+<h1 class="text-light">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">Home</li>
+    </ol>
+</h1>
+
+<hr />
+
 
 </template>

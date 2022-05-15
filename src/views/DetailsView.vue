@@ -1,6 +1,7 @@
 <script setup>
     import { RouterLink } from 'vue-router'
     import FusionComponent from '@/components/FusionComponent.vue';
+    import EquipComponent from '@/components/EquipComponent.vue';
     import { db } from '@/database.js'
 </script>
 
@@ -9,6 +10,7 @@
         data() {
             return {
                 card: null,
+                display: {'summon': false, 'fusion': true, 'equip': false},
                 db
             }
         },
@@ -24,6 +26,11 @@
                 },
                 { immediate: true }
             );
+        },
+        methods: {
+            toggleDisplay(display) {
+                this.display[display] = !this.display[display];
+            }
         },
         computed: {
             cardPictureUrl() {
@@ -46,7 +53,7 @@
     <h1 class="text-light">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <RouterLink to="/" class="text-white text-decoration-none" aria-current="page">
+                <RouterLink to="/cards" class="text-white text-decoration-none" aria-current="page">
                     Cards
                 </RouterLink>
             </li>
@@ -82,11 +89,89 @@
             </div>
         </div>
 
-        <h3 class="mt-4">Fusion to invoke this monster</h3>
-        <FusionComponent :results="card.id" :display="{'step': false, 'result': false, 'result_stats': false}" />
+        <template v-if="card.type == '23'">
+            <div class="row mt-2">
+                <div class="col-12">
+                    <div class="card bg-dark">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-10">
+                                    <h4>Card(s) that can equip {{ card.name }}</h4>
+                                </div>
+                                <div class="col-2 text-end">
+                                    <button class="btn btn-dark" @click="toggleDisplay('equip')">
+                                        <span v-if="display.equip">
+                                            <i class="fa fa-minus"></i>
+                                        </span>
+                                        <span v-else>
+                                            <i class="fa fa-plus"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div :class="'collapse card-body' + ((display.equip) ? ' show' : '')">
+                            <EquipComponent :cards="card.id" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
 
-        <h3 class="mt-4">Fusion available with this monster</h3>
-        <FusionComponent :cards="card.id" :display="{'step': false}" />
+        <hr />
+
+        <div class="row mt-2">
+            <div class="col-12">
+                <div class="card bg-dark">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-10">
+                                <h4>Fusion(s) to summon {{ card.name }}</h4>
+                            </div>
+                            <div class="col-2 text-end">
+                                <button class="btn btn-dark" @click="toggleDisplay('summon')">
+                                    <span v-if="display.summon">
+                                        <i class="fa fa-minus"></i>
+                                    </span>
+                                    <span v-else>
+                                        <i class="fa fa-plus"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div :class="'collapse card-body' + ((display.summon) ? ' show' : '')">
+                        <FusionComponent :results="card.id" :display="{'step': false, 'result': false, 'result_stats': false, 'filter': false}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card bg-dark">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-10">
+                                <h4>Fusion(s) using {{ card.name }}</h4>
+                            </div>
+                            <div class="col-2 text-end">
+                                <button class="btn btn-dark" @click="toggleDisplay('fusion')">
+                                    <span v-if="display.fusion">
+                                        <i class="fa fa-minus"></i>
+                                    </span>
+                                    <span v-else>
+                                        <i class="fa fa-plus"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div :class="'collapse card-body' + ((display.fusion) ? ' show' : '')">
+                        <FusionComponent :cards="card.id" :display="{'step': false}" />
+                    </div>
+                </div>
+            </div>
+        </div>
     </template>
-    
 </template>
