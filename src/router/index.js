@@ -13,19 +13,19 @@ const router = createRouter({
     {
       path: '/cards',
       name: 'cards',
-      component: () => import('../views/CardsView.vue')
+      component: () => import('../views/card/CardsView.vue')
     },
 
     {
       path: '/cards/:id',
       name: 'cardDetails',
-      component: () => import('../views/DetailsView.vue')
+      component: () => import('../views/card/DetailsView.vue')
     },
 
     {
       path: '/decks',
       name: 'decks',
-      component: () => import('../views/DecksView.vue')
+      component: () => import('../views/deck/DecksView.vue')
     },
 
     {

@@ -1,8 +1,10 @@
 <script setup>
+  import Cookies from 'js-cookie'
   import { RouterLink, RouterView } from 'vue-router'
   import Sidebar from '@/components/Sidebar.vue'
   import { SendRequest } from './request.js'
   import { db } from './database.js'
+  import { userdata, LoadUserdata } from './storage.js'
 </script>
 
 <script>
@@ -16,11 +18,15 @@
       }
     },
     created() {
-        this.loadData();
+      this.loadData('userdata');
     },
     methods: {
       loadData() {
         this.dataIsLoading = true;
+
+        this.dataLoadStatusText = "Loading user data";
+        LoadUserdata('userdata');
+
         this.dataLoadStatusText = "Loading database";
         SendRequest("GET", siteUrl + "src/assets/data.min.json", null, this.dataReceived);
       },
@@ -36,6 +42,9 @@
         } 
         
         this.dataIsLoading = false;
+      },
+      defaultData() {
+        return {};
       }
     }
   }

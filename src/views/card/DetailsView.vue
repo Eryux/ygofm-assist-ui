@@ -34,7 +34,7 @@
         },
         computed: {
             cardPictureUrl() {
-                return new URL('../assets/cards/' + this.card["id"] + '.png', import.meta.url).href;
+                return new URL('../../assets/cards/' + this.card["id"] + '.png', import.meta.url).href;
             },
             cardType() {
                 return this.db.data["types"][this.card["type"]];

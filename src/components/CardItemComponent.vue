@@ -47,7 +47,7 @@
                         <tr>
                             <td rowspan="7" style="width: 180px" class="align-middle text-center">
                                 <RouterLink :to="{ name: 'cardDetails', params: { id: card.id }}" aria-current="page">
-                                    <img class="my-2" :src="'./src/assets/cards/' + card.id + '.png'" :alt="card.name" />
+                                    <img class="my-2" :src="cardPictureUrl" :alt="card.name" />
                                 </RouterLink>
                             </td>
                         </tr>
