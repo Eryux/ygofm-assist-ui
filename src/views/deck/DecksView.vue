@@ -72,8 +72,8 @@
     </div>
 
     <div class="row">
-        <div class="col-12 col-12" v-for="deck in userdata.data.decks">
-            <div class="card bg-dark m-2">
+        <div class="col-12 mb-3" v-for="deck in userdata.data.decks">
+            <div class="card bg-dark">
                 <div class="card-body">
                     <table class="table table-dark table-bordered mb-0">
                         <tbody>

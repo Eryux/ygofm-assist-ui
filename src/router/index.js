@@ -35,6 +35,12 @@ const router = createRouter({
     },
 
     {
+      path: '/decks/:id/fusions',
+      name: 'deckFusions',
+      component: () => import('../views/deck/FusionsView.vue')
+    },
+
+    {
       path: '/game',
       name: 'game',
       component: () => import('../views/GameAssistView.vue')

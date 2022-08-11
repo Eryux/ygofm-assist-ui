@@ -8,12 +8,14 @@
         props: {
             cards: String,
             results: String,
+            any: Boolean,
             display: Object
         },
         data() {
             return {
                 filter_cards: [],
                 filter_results: [],
+                filter_fusion_any: true,
                 filter: '',
                 columns: {'step': true, 'result': true, 'result_stats': true, 'filter': true},
                 sort: 'id',
@@ -31,6 +33,12 @@
 
             if (this.results != null && this.results.length > 0)
                 this.filter_results = this.results.split(',');
+
+            if (this.any != null)
+                this.filter_fusion_any = this.any;
+
+            console.log(this.any);
+            console.log(this.filter_fusion_any);
 
             if (this.display != null) {
                 this.columns['step'] = ('step' in this.display) ? this.display.step : true;
@@ -76,7 +84,10 @@
                     {
                         for (let j = 0; j < card_base["fusions"].length; ++j)
                         {
-                            this.fusions.push([card_base, this.retrieveCard(card_base["fusions"][j][0]), this.retrieveCard(card_base["fusions"][j][1])])
+                            if (this.filter_fusion_any || this.filter_cards.indexOf(card_base["fusions"][j][0]) != -1)
+                            {
+                                this.fusions.push([card_base, this.retrieveCard(card_base["fusions"][j][0]), this.retrieveCard(card_base["fusions"][j][1])]);
+                            }
                         }
                     }
                     else
@@ -85,7 +96,7 @@
                         {
                             if (this.filter_results.includes(card_base["fusions"][j][1]))
                             {
-                                this.fusions.push([card_base, this.retrieveCard(card_base["fusions"][j][0]), this.retrieveCard(card_base["fusions"][j][1])])
+                                this.fusions.push([card_base, this.retrieveCard(card_base["fusions"][j][0]), this.retrieveCard(card_base["fusions"][j][1])]);
                             }
                         }
                     }

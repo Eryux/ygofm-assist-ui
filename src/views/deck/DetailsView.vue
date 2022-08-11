@@ -11,7 +11,7 @@
         data() {
             return {
                 userdata,
-                deck: null,
+                deck: {'name': "", 'cards': [], 'id': ''},
                 new_card_number: "",
                 delete_confirm_modal: null,
                 db
@@ -98,11 +98,13 @@
 
     <hr />
 
-    <p class="lead text-center" v-if="deck == null">Deck not found</p>
+    <p class="lead text-center" v-if="deck == null || deck.name == ''">Deck not found</p>
     <template v-else>
         <div class="d-flex flex-column flex-md-row justify-content-end">
             <div class="m-2">
-                <button class="btn btn-primary"><i class="fas fa-layer-group"></i> Show fusion(s)</button>
+                <RouterLink :to="{ name: 'deckFusions', params: { id: deck.id }}" class="btn btn-primary" aria-current="page">
+                    <i class="fas fa-layer-group"></i> Show fusion(s)
+                </RouterLink>
             </div>
             <div class="m-2">
                 <button class="btn btn-danger" :onclick="deleteCurrentDeckConfirm"><i class="fas fa-trash"></i> Delete deck</button>
@@ -120,14 +122,13 @@
 
         <p v-if="deck.cards.length == 0" class="lead text-center">No card in deck</p>
         <template v-else>
-            <table class="table table-borderless">
-                <tbody>
-                    <tr v-for="(card, index) in deck.cards" :key="card">
-                        <td><CardItemComponent :cardid="card" /></td>
-                        <td><button class="btn btn-danger" v-on:click="deleteCard(index)" style="margin-top: 2px;"><i class="fas fa-trash"></i></button></td>
-                    </tr>
-                </tbody>
-            </table>
+            
+            <div class="row" v-for="(card, index) in deck.cards" :key="card">
+                <div class="col-12 text-end">
+                    <button class="btn btn-danger btn-sm rounded-0 rounded-top mx-2" v-on:click="deleteCard(index)" style=""><i class="fas fa-times"></i> Remove from deck</button>
+                </div>
+                <CardItemComponent :cardid="card" />
+            </div>
         </template>
     </template>
 
@@ -141,7 +142,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p class="lead text-center">This will delete the entire deck and it can not be undo.</p>
+                    <p class="lead text-center">This will delete the entire deck.<br />Please note that this action can not be undo.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

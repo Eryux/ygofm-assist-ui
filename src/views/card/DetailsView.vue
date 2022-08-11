@@ -168,7 +168,7 @@
                         </div>
                     </div>
                     <div :class="'collapse card-body' + ((display.fusion) ? ' show' : '')">
-                        <FusionComponent :cards="card.id" :display="{'step': false}" />
+                        <FusionComponent :cards="card.id" :any="true" :display="{'step': false}" />
                     </div>
                 </div>
             </div>
