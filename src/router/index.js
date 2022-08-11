@@ -29,6 +29,12 @@ const router = createRouter({
     },
 
     {
+      path: '/decks/:id',
+      name: 'deckDetails',
+      component: () => import('../views/deck/DetailsView.vue')
+    },
+
+    {
       path: '/game',
       name: 'game',
       component: () => import('../views/GameAssistView.vue')

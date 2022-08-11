@@ -1,3 +1,5 @@
+const path = require('path');
+
 import {
   fileURLToPath,
   URL
@@ -12,9 +14,10 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   resolve: {
+    root: path.resolve(__dirname, 'src'),
     alias: {
-      '@': fileURLToPath(new URL('./src',
-        import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
     }
   },
   css: {
