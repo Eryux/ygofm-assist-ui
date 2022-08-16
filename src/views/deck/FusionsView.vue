@@ -67,7 +67,7 @@
                         <h4>Fusion(s)</h4>
                     </div>
                     <div class="card-body">
-                        <FusionComponent :cards="cards" :any="false" :display="{'step': false}" />
+                        <FusionComponent :cards="cards" :deck="cards" :depth="2" :display="{'step': true}" />
                     </div>
                 </div>
             </div>

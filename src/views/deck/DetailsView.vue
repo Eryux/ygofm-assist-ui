@@ -100,23 +100,39 @@
 
     <p class="lead text-center" v-if="deck == null || deck.name == ''">Deck not found</p>
     <template v-else>
-        <div class="d-flex flex-column flex-md-row justify-content-end">
-            <div class="m-2">
-                <RouterLink :to="{ name: 'deckFusions', params: { id: deck.id }}" class="btn btn-primary" aria-current="page">
-                    <i class="fas fa-layer-group"></i> Show fusion(s)
-                </RouterLink>
-            </div>
-            <div class="m-2">
-                <button class="btn btn-danger" :onclick="deleteCurrentDeckConfirm"><i class="fas fa-trash"></i> Delete deck</button>
+        <div class="row">
+            <div class=" col-12 mb-2">
+                <div class="card bg-dark">
+                    <div class="card-body">
+                        <table class="table table-dark table-bordered mb-0">
+                            <tbody>
+                                <tr><td><strong>Name</strong></td><td>{{ deck.name }}</td></tr>
+                                <tr><td><strong>Id</strong></td><td>{{ deck.id }}</td></tr>
+                                <tr><td><strong>Card number</strong></td><td>{{ deck.cards.length }}/40</td></tr>
+                                <tr><td colspan="2" class="text-center">
+                                    <RouterLink :to="{ name: 'deckFusions', params: { id: deck.id }}" class="text-decoration-none" aria-current="page">
+                                        Show deck fusion(s)
+                                    </RouterLink>
+                                </td></tr>
+                            </tbody>
+                        </table>
+
+                         <div class="mt-3 text-end">
+                            <button class="btn btn-danger btn-sm" :onclick="deleteCurrentDeckConfirm"><i class="fas fa-trash"></i> Delete deck</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="d-flex flex-column flex-md-row mb-2">
-            <div class="m-2">
-                <input type="text" class="form-control form-control" name="card_number" v-model="new_card_number" placeholder="Card number" />
+        <hr />
+
+        <div class="d-flex flex-column flex-md-row m-2">
+            <div class="me-2">
+                <input type="text" class="form-control form-control-lg" name="card_number" v-model="new_card_number" placeholder="Card number" />
             </div>
-            <div class="m-2">
-                <button class="btn btn-primary" :onclick="addCard"><i class="fas fa-plus"></i> Add card</button>
+            <div class="ms-2">
+                <button class="btn btn-primary btn-lg" :onclick="addCard"><i class="fas fa-plus"></i> Add card to deck</button>
             </div>
         </div>
 

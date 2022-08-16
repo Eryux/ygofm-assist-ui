@@ -62,12 +62,12 @@
 
     <hr />
 
-    <div class="d-flex flex-column flex-md-row mb-2">
-        <div class="m-2">
-            <input type="text" class="form-control form-control" name="deck_name" v-model="new_deck_name" placeholder="Name" />
+    <div class="d-flex flex-column flex-md-row mb-4 mt-2">
+        <div class="me-2">
+            <input type="text" class="form-control form-control-lg" name="deck_name" v-model="new_deck_name" placeholder="Name" />
         </div>
-        <div class="m-2">
-            <button class="btn btn-primary" :onclick="addDeck"><i class="fas fa-plus"></i> New deck</button>
+        <div class="ms-2">
+            <button class="btn btn-primary btn-lg" :onclick="addDeck"><i class="fas fa-plus"></i> Create new deck</button>
         </div>
     </div>
 

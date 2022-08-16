@@ -8,15 +8,16 @@
         props: {
             cards: String,
             results: String,
-            any: Boolean,
+            deck: String,
+            depth: Number,
             display: Object
         },
         data() {
             return {
                 filter_cards: [],
                 filter_results: [],
-                filter_fusion_any: true,
-                filter: '',
+                filter_deck: [],
+                filter_depth: 1,
                 columns: {'step': true, 'result': true, 'result_stats': true, 'filter': true},
                 sort: 'id',
                 sort_order: 'asc',
@@ -34,11 +35,14 @@
             if (this.results != null && this.results.length > 0)
                 this.filter_results = this.results.split(',');
 
-            if (this.any != null)
-                this.filter_fusion_any = this.any;
+            if (this.deck != null && this.deck.length > 0)
+                this.filter_deck = this.deck.split(',');
 
-            console.log(this.any);
-            console.log(this.filter_fusion_any);
+            if (this.depth != null)
+                this.filter_depth = this.depth;
+
+            if (this.filter_deck.length == 0)
+                this.filter_deck = this.db.data["cards"].map(x => x["id"]);
 
             if (this.display != null) {
                 this.columns['step'] = ('step' in this.display) ? this.display.step : true;
@@ -65,45 +69,76 @@
             runFusionCalc() {
                 let self = this;
                 self.loading = true;
+
                 setTimeout(function() {
-                    self.calculateFusion();
+                    self.fusions = [];
+
+                    if (self.filter_cards.length > 0) {
+                        self.calculateFusionByCard(self.filter_cards, self.filter_deck);
+                    }
+
+                    if (self.filter_results.length > 0) {
+                        self.calculateFusionByResult(self.filter_results, self.filter_deck);
+                    }
+
+                    self.filtered_fusions = self.fusions;
+
+                    self.refreshSort(null);
+
                     self.loading = false;
+                    
                 }, 100);
             },
-            calculateFusion() {
-                this.fusions = [];
+            calculateFusionByCard(cards = [], deck = [], depth = 1)
+            {
+                let pool = [...cards]
+                let card_idx = pool.pop();
 
-                let card_pool = (this.filter_cards.length > 0) ? 
-                    this.db.data["cards"].filter(x => this.filter_cards.includes(x["id"]) ) : this.db.data["cards"];
-
-                for (let i = 0; i < card_pool.length; ++i)
+                while (card_idx !== undefined)
                 {
-                    let card_base = this.retrieveCard(card_pool[i]["id"]);
+                    let deck_idx = deck.indexOf(card_idx);
+                    if (deck_idx != -1) {
+                        deck.splice(deck_idx, 1);
+                    }
 
-                    if (this.filter_results.length == 0)
+                    let card = this.retrieveCard(card_idx);
+
+                    for (let j = 0; j < card["fusions"].length; ++j)
                     {
-                        for (let j = 0; j < card_base["fusions"].length; ++j)
+                        if (deck.indexOf(card["fusions"][j][0]) != -1)
                         {
-                            if (this.filter_fusion_any || this.filter_cards.indexOf(card_base["fusions"][j][0]) != -1)
+                            this.fusions.push([card, this.retrieveCard(card["fusions"][j][0]), this.retrieveCard(card["fusions"][j][1]), depth]);
+
+                            if (depth < this.filter_depth)
                             {
-                                this.fusions.push([card_base, this.retrieveCard(card_base["fusions"][j][0]), this.retrieveCard(card_base["fusions"][j][1])]);
+                                let deck_copy = [...deck];
+                                deck_copy.splice(deck_copy.indexOf(card["fusions"][j][0]), 1);
+                                this.calculateFusionByCard([card["fusions"][j][1]], deck_copy, depth + 1);
                             }
                         }
                     }
-                    else
+
+                    deck.push(card_idx);
+                    card_idx = pool.pop();
+                }
+            },
+            calculateFusionByResult(cards = [], deck = [])
+            {
+                let pool = deck.map(x => this.retrieveCard(x));
+
+                for (let i = 0; i < cards.length; ++i)
+                {
+                    for (let j = 0; j < pool.length; ++j)
                     {
-                        for (let j = 0; j < card_base["fusions"].length; ++j)
+                        for (let k = 0; k < pool[j]["fusions"].length; ++k)
                         {
-                            if (this.filter_results.includes(card_base["fusions"][j][1]))
+                            if (pool[j]["fusions"][k][1] == cards[i] && (deck.length == 0 || deck.indexOf(pool[j]["fusions"][k][0]) != -1))
                             {
-                                this.fusions.push([card_base, this.retrieveCard(card_base["fusions"][j][0]), this.retrieveCard(card_base["fusions"][j][1])]);
+                                this.fusions.push([pool[j], this.retrieveCard(pool[j]["fusions"][k][0]), this.retrieveCard(pool[j]["fusions"][k][1]), 1]);
                             }
                         }
                     }
                 }
-
-                this.refreshFilter(null);
-                this.refreshSort(null);
             },
             retrieveCard(card_id) {
                 for (let i = 0; i < this.db.data["cards"].length; ++i)
@@ -116,45 +151,40 @@
 
                 return null;
             },
-            refreshFilter(event) {
-                let filter = this.filter.toLowerCase();
-
-                if (this.filter.length > 0)
-                    this.filtered_fusions = this.fusions.filter(x => x[2]["id"] == filter || x[2]["name"].toLowerCase().indexOf(filter) >= 0);
-                else
-                    this.filtered_fusions = this.fusions;
-            },
             refreshSort(event) {
-                if (this.sort_order == "desc")
+                if (this.filter_depth == 1)
                 {
-                    if (this.sort == "name") {
-                        this.filtered_fusions = this.filtered_fusions.sort((a, b) => b[2]["name"].localeCompare(a[2]["name"]));
-                    } else if (this.sort == "type") {
-                        this.filtered_fusions = this.filtered_fusions.sort((a, b) => b[2]["type"].localeCompare(a[2]["type"]));
-                    } else if (this.sort == "attack") {
-                        this.filtered_fusions = this.filtered_fusions.sort((a, b) => b[2]["attack"] - a[2]["attack"]);
-                    } else if (this.sort == "defense") {
-                        this.filtered_fusions = this.filtered_fusions.sort((a, b) => b[2]["defense"] - a[2]["defense"]);
-                    } else if (this.sort == "level") {
-                        this.filtered_fusions = this.filtered_fusions.sort((a, b) => b[2]["level"] - a[2]["level"]);
-                    } else {
-                        this.filtered_fusions = this.filtered_fusions.sort((a, b) => parseInt(b[2]["id"]) - parseInt(a[2]["id"])); // by id
+                    if (this.sort_order == "desc")
+                    {
+                        if (this.sort == "name") {
+                            this.filtered_fusions = this.filtered_fusions.sort((a, b) => b[2]["name"].localeCompare(a[2]["name"]));
+                        } else if (this.sort == "type") {
+                            this.filtered_fusions = this.filtered_fusions.sort((a, b) => b[2]["type"].localeCompare(a[2]["type"]));
+                        } else if (this.sort == "attack") {
+                            this.filtered_fusions = this.filtered_fusions.sort((a, b) => b[2]["attack"] - a[2]["attack"]);
+                        } else if (this.sort == "defense") {
+                            this.filtered_fusions = this.filtered_fusions.sort((a, b) => b[2]["defense"] - a[2]["defense"]);
+                        } else if (this.sort == "level") {
+                            this.filtered_fusions = this.filtered_fusions.sort((a, b) => b[2]["level"] - a[2]["level"]);
+                        } else {
+                            this.filtered_fusions = this.filtered_fusions.sort((a, b) => parseInt(b[2]["id"]) - parseInt(a[2]["id"])); // by id
+                        }
                     }
-                }
-                else // asc
-                {
-                    if (this.sort == "name") {
-                        this.filtered_fusions = this.filtered_fusions.sort((a, b) => a[2]["name"].localeCompare(b[2]["name"]));
-                    } else if (this.sort == "type") {
-                        this.filtered_fusions = this.filtered_fusions.sort((a, b) => a[2]["type"].localeCompare(b[2]["type"]));
-                    } else if (this.sort == "attack") {
-                        this.filtered_fusions = this.filtered_fusions.sort((a, b) => a[2]["attack"] - b[2]["attack"]);
-                    } else if (this.sort == "defense") {
-                        this.filtered_fusions = this.filtered_fusions.sort((a, b) => a[2]["defense"] - b[2]["defense"]);
-                    } else if (this.sort == "level") {
-                        this.filtered_fusions = this.filtered_fusions.sort((a, b) => a[2]["level"] - b[2]["level"]);
-                    } else {
-                        this.filtered_fusions = this.filtered_fusions.sort((a, b) => parseInt(a[2]["id"]) - parseInt(b[2]["id"])); // by id
+                    else // asc
+                    {
+                        if (this.sort == "name") {
+                            this.filtered_fusions = this.filtered_fusions.sort((a, b) => a[2]["name"].localeCompare(b[2]["name"]));
+                        } else if (this.sort == "type") {
+                            this.filtered_fusions = this.filtered_fusions.sort((a, b) => a[2]["type"].localeCompare(b[2]["type"]));
+                        } else if (this.sort == "attack") {
+                            this.filtered_fusions = this.filtered_fusions.sort((a, b) => a[2]["attack"] - b[2]["attack"]);
+                        } else if (this.sort == "defense") {
+                            this.filtered_fusions = this.filtered_fusions.sort((a, b) => a[2]["defense"] - b[2]["defense"]);
+                        } else if (this.sort == "level") {
+                            this.filtered_fusions = this.filtered_fusions.sort((a, b) => a[2]["level"] - b[2]["level"]);
+                        } else {
+                            this.filtered_fusions = this.filtered_fusions.sort((a, b) => parseInt(a[2]["id"]) - parseInt(b[2]["id"])); // by id
+                        }
                     }
                 }
             }
@@ -175,14 +205,8 @@
             </div>
         </div>
         <template v-else>
-            <div class="row mt-2" v-if="columns.filter">
-                <div class="col-md-7 col-12 mb-2">
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="fa fa-search"></i></span>
-                        <input v-model="filter" @change="refreshFilter" @keyup="refreshFilter" type="text" class="form-control form-control-lg" name="card_search" placeholder="Enter card name or card number" />
-                    </div>
-                </div>
-                <div class="col-md-3 col-8">
+            <div class="row mt-2 mb-4" v-if="columns.filter">
+                <div class="col-md-3 col-8 mb-2">
                     <div class="input-group">
                         <span class="input-group-text"><i class="fa fa-sort"></i></span>
                         <select class="form-select form-select-lg" v-model="sort" @change="refreshSort">
@@ -203,6 +227,17 @@
                         </select>
                     </div>
                 </div>
+                <div class="col-md-2 col-12" v-if="columns.step">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa fa-layer-group"></i></span>
+                        <select class="form-select form-select-lg" v-model="filter_depth" @change="runFusionCalc">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
             <div class="row mt-2">
@@ -210,7 +245,7 @@
                     <table class="table table-hover table-dark table-bordered mb-0">
                         <thead>
                             <tr>
-                                <td v-if="columns.step">Step</td>
+                                <td v-if="columns.step" class="text-center">Step</td>
                                 <td>Fusion</td>
                                 <td v-if="columns.result">Result</td>
                                 <td v-if="columns.result_stats">Atk.</td>
@@ -219,7 +254,7 @@
                         </thead>
                         <tbody>
                             <tr v-for="fusion in filtered_fusions">
-                                <td v-if="columns.step">1</td>
+                                <td v-if="columns.step" class="text-center">{{ fusion[3] }}</td>
                                 <td><RouterLink :to="{ name: 'cardDetails', params: { id: fusion[0].id }}">{{ fusion[0].name }}</RouterLink> + <RouterLink :to="{ name: 'cardDetails', params: { id: fusion[1].id }}">{{ fusion[1].name }}</RouterLink></td>
                                 <td v-if="columns.result"><RouterLink :to="{ name: 'cardDetails', params: { id: fusion[2].id }}">{{ fusion[2].name }}</RouterLink></td>
                                 <td v-if="columns.result_stats">{{ fusion[2].attack }}</td>
