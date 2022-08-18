@@ -59,6 +59,15 @@
                     this.filter_cards = newValue.split(',');
                 this.runFusionCalc();
             },
+            deck(newValue, oldValue) {
+                if (newValue != null)
+                    this.filter_deck = this.deck.split(',');
+
+                if (this.filter_deck.length == 0)
+                    this.filter_deck = this.db.data["cards"].map(x => x["id"]);
+
+                this.runFusionCalc();
+            },
             results(newValue, oldValue) {
                 if (newValue.length > 0)
                     this.filter_results = newValue.split(',');

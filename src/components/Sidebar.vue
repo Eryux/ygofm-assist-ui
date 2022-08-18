@@ -1,11 +1,11 @@
 <script setup>
-import { RouterLink } from 'vue-router'
+    import { RouterLink } from 'vue-router'
 </script>
 
 <template>
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark sidebar">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
-            <p class="fs-4 text-center text-white">Yu-Gi-Oh! Forbidden Memory - Fusion Tool</p>
+            <p class="fs-4 text-center text-white">Yu-Gi-Oh! Forbidden Memory - Assist</p>
         </a>
 
         <hr>
@@ -26,6 +26,12 @@ import { RouterLink } from 'vue-router'
             <li class="nav-item mb-2">
                 <RouterLink to="/decks" class="nav-link text-white">
                     Decks
+                </RouterLink>
+            </li>
+
+            <li class="nav-item mb-2">
+                <RouterLink to="/stars" class="nav-link text-white">
+                    Guardian Stars
                 </RouterLink>
             </li>
 

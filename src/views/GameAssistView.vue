@@ -117,7 +117,7 @@ export default {
         <div class="col-12">
             <div class="card bg-dark">
                 <div class="card-body">
-                    <table class="table table-dark table-bordered">
+                    <table class="table table-dark table-bordered mb-0">
                         <tbody>
                             <tr>
                                 <td rowspan="2" style="width:120px;" class="align-middle text-center"><h4>Ground</h4></td>
@@ -127,7 +127,7 @@ export default {
                                             <img class="my-2" :src="getCardPictureUrl(cards[n-1].id)" :alt="cards[n-1].name" />
                                         </RouterLink>
                                     </template>
-                                    <span v-else class="text-center">No cards</span>
+                                    <span v-else class="text-center">Slot {{ n }}</span>
                                 </td>
                             </tr>
                             <tr>
@@ -152,7 +152,7 @@ export default {
         <div class="col-12">
             <div class="card bg-dark">
                 <div class="card-body">
-                    <table class="table table-dark table-bordered">
+                    <table class="table table-dark table-bordered mb-0">
                         <tbody>
                             <tr>
                                 <td rowspan="2" style="width:120px;" class="align-middle text-center"><h4>Hand</h4></td>
@@ -162,7 +162,7 @@ export default {
                                             <img class="my-2" :src="getCardPictureUrl(cards[n+4].id)" :alt="cards[n+4].name" />
                                         </RouterLink>
                                     </template>
-                                    <span v-else class="text-center">No cards</span>
+                                    <span v-else class="text-center">Slot {{ n }}</span>
                                 </td>
                             </tr>
                             <tr>

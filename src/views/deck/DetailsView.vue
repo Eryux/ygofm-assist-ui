@@ -13,7 +13,6 @@
                 userdata,
                 deck: {'name': "", 'cards': [], 'id': ''},
                 new_card_number: "",
-                delete_confirm_modal: null,
                 db
             }
         },
@@ -35,7 +34,9 @@
             );
         },
         methods: {
-            addCard() {
+            addCard(event) {
+                event.preventDefault();
+                
                 if (this.new_card_number.length == 0) return;
 
                 if (this.deck["cards"].length == 40)
@@ -58,22 +59,19 @@
 
                 SaveUserdata('userdata');
             },
-            deleteCurrentDeckConfirm() {
-                if (this.delete_confirm_modal == null) {
-                    this.delete_confirm_modal = new Modal("#deleteConfirmModal", {});
-                } this.delete_confirm_modal.show();
-            },
             deleteCurrentDeck() {
-                if (this.delete_confirm_modal != null) {
-                    this.delete_confirm_modal.hide();
-                }
-
-                let index = this.userdata.data["decks"].indexOf(this.deck);
-                if (index > -1)
+                if (confirm("This will delete the entire deck.\nPlease note, this action can not be undo."))
                 {
-                    this.userdata.data["decks"].splice(index, 1);
-                    SaveUserdata('userdata');
-                    this.$router.push('/decks')
+                    let index = this.userdata.data["decks"].indexOf(this.deck);
+
+                    if (index > -1)
+                    {
+                        this.userdata.data["decks"].splice(index, 1);
+
+                        SaveUserdata('userdata');
+
+                        this.$router.push('/decks')
+                    }
                 }
             },
             deleteCard(card_index) {
@@ -118,7 +116,7 @@
                         </table>
 
                          <div class="mt-3 text-end">
-                            <button class="btn btn-danger btn-sm" :onclick="deleteCurrentDeckConfirm"><i class="fas fa-trash"></i> Delete deck</button>
+                            <button class="btn btn-danger btn-sm" @click="deleteCurrentDeck"><i class="fas fa-trash"></i> Delete deck</button>
                         </div>
                     </div>
                 </div>
@@ -127,14 +125,16 @@
 
         <hr />
 
-        <div class="d-flex flex-column flex-md-row m-2">
-            <div class="me-2">
-                <input type="text" class="form-control form-control-lg" name="card_number" v-model="new_card_number" placeholder="Card number" />
+        <form action="#" method="POST" @submit="addCard($event)">
+            <div class="d-flex flex-column flex-md-row m-2">
+                <div class="me-2">
+                    <input type="text" class="form-control form-control-lg" name="card_number" v-model="new_card_number" placeholder="Card number" />
+                </div>
+                <div class="ms-2">
+                    <button class="btn btn-primary btn-lg" type="submit"><i class="fas fa-plus"></i> Add card to deck</button>
+                </div>
             </div>
-            <div class="ms-2">
-                <button class="btn btn-primary btn-lg" :onclick="addCard"><i class="fas fa-plus"></i> Add card to deck</button>
-            </div>
-        </div>
+        </form>
 
         <p v-if="deck.cards.length == 0" class="lead text-center">No card in deck</p>
         <template v-else>
@@ -147,24 +147,4 @@
             </div>
         </template>
     </template>
-
-    <div class="modal fade  text-dark" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Are you sure?</h5>
-                    <button type="button" class="btn close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p class="lead text-center">This will delete the entire deck.<br />Please note that this action can not be undo.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" :onclick="deleteCurrentDeck">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </template>

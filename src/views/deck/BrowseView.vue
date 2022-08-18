@@ -26,7 +26,9 @@
             }
         },
         methods: {
-            addDeck() {
+            addDeck(event) {
+                event.preventDefault();
+
                 if (this.new_deck_name.length == 0) return;
 
                 if (this.userdata.data['decks'].length > 24) {
@@ -62,14 +64,16 @@
 
     <hr />
 
-    <div class="d-flex flex-column flex-md-row mb-4 mt-2">
-        <div class="me-2">
-            <input type="text" class="form-control form-control-lg" name="deck_name" v-model="new_deck_name" placeholder="Name" />
+    <form action="#" method="POST" @submit="addDeck($event)">
+        <div class="d-flex flex-column flex-md-row mb-4 mt-2">
+                <div class="me-2">
+                    <input type="text" class="form-control form-control-lg" name="deck_name" v-model="new_deck_name" placeholder="Name" />
+                </div>
+                <div class="ms-2">
+                    <button class="btn btn-primary btn-lg" type="submit"><i class="fas fa-plus"></i> Create new deck</button>
+                </div>
         </div>
-        <div class="ms-2">
-            <button class="btn btn-primary btn-lg" :onclick="addDeck"><i class="fas fa-plus"></i> Create new deck</button>
-        </div>
-    </div>
+    </form>
 
     <div class="row">
         <div class="col-12 mb-3" v-for="deck in userdata.data.decks">

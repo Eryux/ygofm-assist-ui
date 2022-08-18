@@ -12,34 +12,51 @@ const router = createRouter({
 
     {
       path: '/cards',
-      name: 'cards',
-      component: () => import('../views/card/CardsView.vue')
-    },
+      component: () => import('../views/card/CardView.vue'),
 
-    {
-      path: '/cards/:id',
-      name: 'cardDetails',
-      component: () => import('../views/card/DetailsView.vue')
+      children: [
+        {
+          path: '',
+          name: 'cards',
+          component: () => import('../views/card/BrowseView.vue')
+        },
+        {
+          path: ':id',
+          name: 'cardDetails',
+          component: () => import('../views/card/DetailsView.vue')
+        },
+      ]
     },
 
     {
       path: '/decks',
-      name: 'decks',
-      component: () => import('../views/deck/DecksView.vue')
+      component: () => import('../views/deck/DeckView.vue'),
+
+      children: [
+        {
+          path: '',
+          name: 'decks',
+          component: () => import('../views/deck/BrowseView.vue')
+        },
+        {
+          path: ':id',
+          name: 'deckDetails',
+          component: () => import('../views/deck/DetailsView.vue')
+        },
+        {
+          path: ':id/fusions',
+          name: 'deckFusions',
+          component: () => import('../views/deck/FusionsView.vue')
+        },
+      ]
     },
 
     {
-      path: '/decks/:id',
-      name: 'deckDetails',
-      component: () => import('../views/deck/DetailsView.vue')
+      path: '/stars',
+      name: 'stars',
+      component: () => import('../views/StarsView.vue')
     },
-
-    {
-      path: '/decks/:id/fusions',
-      name: 'deckFusions',
-      component: () => import('../views/deck/FusionsView.vue')
-    },
-
+    
     {
       path: '/game',
       name: 'game',
@@ -49,6 +66,8 @@ const router = createRouter({
   ],
 
   linkActiveClass: "active",
-})
+
+  linkExactActiveClass: "active-exact",
+});
 
 export default router
