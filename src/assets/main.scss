@@ -1,6 +1,11 @@
+$sm_width: 576px;
+$md_width: 768px;
+$lg_width: 992px;
+
 body {
     min-height: 100vh;
     min-height: -webkit-fill-available;
+    min-width: 480px;
     background: #222;
     position: relative;
 }
@@ -30,6 +35,11 @@ main {
     top: 0;
     bottom: 0;
     position: fixed;
+    z-index: 10;
+
+    @media screen and (max-width: $lg_width) {
+        width: 84px;
+    }
 }
 
 section
@@ -37,8 +47,16 @@ section
     margin: 1rem 40px 1rem 320px;
     width: 100%;
 
+    @media screen and (max-width: $lg_width) {
+        margin: 1rem 1rem 1rem 104px;
+    }
+
     p {
         margin-bottom: 0.5rem;
+    }
+
+    .game-assist {
+        min-width: 920px;
     }
 }
 

@@ -65,11 +65,11 @@
     <hr />
 
     <form action="#" method="POST" @submit="addDeck($event)">
-        <div class="d-flex flex-column flex-md-row mb-4 mt-2">
-                <div class="me-2">
+        <div class="d-flex flex-column flex-md-row mb-2 mt-2">
+                <div class="me-4 mb-2">
                     <input type="text" class="form-control form-control-lg" name="deck_name" v-model="new_deck_name" placeholder="Name" />
                 </div>
-                <div class="ms-2">
+                <div>
                     <button class="btn btn-primary btn-lg" type="submit"><i class="fas fa-plus"></i> Create new deck</button>
                 </div>
         </div>

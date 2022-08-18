@@ -53,7 +53,7 @@
                         </tr>
                         <tr><td colspan="4"><h4>#{{ card.id }}. {{ card.name }}</h4></td></tr>
                         <tr><td><b>Type</b></td><td colspan="3">{{ cardType }}</td></tr>
-                        <tr><td><b>Guardian stars</b></td><td colspan="3">{{ cardGuardian1 }} / {{ cardGuardian2 }}</td></tr>
+                        <tr><td><b>Guardian stars</b></td><td colspan="3">{{ cardGuardian1.symbol }} {{ cardGuardian1.name }} / {{ cardGuardian2.symbol }} {{ cardGuardian2.name }}</td></tr>
                         <tr><td><b>Attack</b></td><td>{{ card.attack }}</td><td><b>Defense</b></td><td>{{ card.defense }}</td></tr>
                         <tr><td><b>Description</b></td><td colspan="3">{{ card.description }}</td></tr>
                         <tr>

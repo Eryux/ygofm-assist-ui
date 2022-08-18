@@ -9,7 +9,7 @@ export const userdata = reactive({
 
 export function SaveUserdata(cookie_name)
 {
-    Cookies.set(cookie_name, btoa(JSON.stringify(userdata.data)), { expires: 90 });
+    Cookies.set(cookie_name, btoa(JSON.stringify(userdata.data)), { expires: 90, sameSite: 'strict' });
 }
 
 export function LoadUserdata(cookie_name)

@@ -35252,65 +35252,15 @@
         "23": "Equip"
     },
     "guardians": {
-        "0": {
-            "name": "Mars",
-            "symbol": "\u2642",
-            "strong": "1",
-            "weak": "5"
-        },
-        "1": {
-            "name": "Jupiter",
-            "symbol": "\u2643",
-            "strong": "2",
-            "weak": "0"
-        },
-        "2": {
-            "name": "Saturn",
-            "symbol": "\u2644",
-            "strong": "3",
-            "weak": "1"
-        },
-        "3": {
-            "name": "Uranus",
-            "symbol": "\u26e2",
-            "strong": "4",
-            "weak": "2"
-        },
-        "4": {
-            "name": "Pluto",
-            "symbol": "\u2647",
-            "strong": "5",
-            "weak": "3"
-        },
-        "5": {
-            "name": "Neptune",
-            "symbol": "\u2646",
-            "strong": "0",
-            "weak": "4"
-        },
-        "6": {
-            "name": "Mercury",
-            "symbol": "\u263f",
-            "strong": "7",
-            "weak": "9"
-        },
-        "7": {
-            "name": "Sun",
-            "symbol": "\u2609",
-            "strong": "8",
-            "weak": "6"
-        },
-        "8": {
-            "name": "Moon",
-            "symbol": "\u263e",
-            "strong": "9",
-            "weak": "7"
-        },
-        "9": {
-            "name": "Venus",
-            "symbol": "\u2640",
-            "strong": "6",
-            "weak": "8"
-        }
+        "0": "Mars",
+        "1": "Jupiter",
+        "2": "Saturn",
+        "3": "Uranus",
+        "4": "Pluto",
+        "5": "Neptune",
+        "6": "Mercury",
+        "7": "Sun",
+        "8": "Moon",
+        "9": "Venus"
     }
 }

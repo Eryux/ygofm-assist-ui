@@ -76,7 +76,7 @@
                                 <tr><td><strong>Name</strong></td><td>{{ card["name"] }}</td></tr>
                                 <tr><td><strong>Type</strong></td><td>{{ cardType }}</td></tr>
                                 <tr><td><strong>Level</strong></td><td>{{ card["level"] }}</td></tr>
-                                <tr><td><strong>Guardian stars</strong></td><td>{{ cardGuardian1 }} / {{ cardGuardian2 }}</td></tr>
+                                <tr><td><strong>Guardian stars</strong></td><td>{{ cardGuardian1.symbol }} {{ cardGuardian1.name }} / {{ cardGuardian2.symbol }} {{ cardGuardian2.name }}</td></tr>
                                 <tr><td><strong>Description</strong></td><td>{{ card["description"] }}</td></tr>
                                 <tr><td><strong>Attack</strong></td><td>{{ card["attack"] }}</td></tr>
                                 <tr><td><strong>Defense</strong></td><td>{{ card["defense"] }}</td></tr>

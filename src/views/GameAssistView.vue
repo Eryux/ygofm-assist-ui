@@ -1,6 +1,7 @@
 <script setup>
     import { RouterLink } from 'vue-router'
     import FusionComponent from '@/components/FusionComponent.vue'
+    import GuardianStarComponent from '@/components/GuardianStarComponent.vue';
     import { userdata, SaveUserdata } from '@/storage.js'
     import { db } from '@/database.js'
 </script>
@@ -99,100 +100,117 @@ export default {
 </script>
 
 <template>
-    <h1 class="text-light">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item active">Game Assist</li>
-        </ol>
-    </h1>
-
-    <hr />
-
-    <div class="d-flex flex-column flex-md-row mb-4 mt-2">
-        <div class="me-2">
-            <button class="btn btn-primary btn-lg" :onclick="resetGame"><i class="fas fa-refresh"></i> Start new game</button>
+    <div class="game-assist">
+        <h1 class="text-light">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">Game Assist</li>
+            </ol>
+        </h1>
+    
+        <hr />
+    
+        <div class="d-flex flex-column flex-md-row mb-4 mt-2">
+            <div class="me-2">
+                <button class="btn btn-primary btn-lg" :onclick="resetGame"><i class="fas fa-refresh"></i> Start new game</button>
+            </div>
         </div>
-    </div>
-
-    <div class="row mb-2">
-        <div class="col-12">
-            <div class="card bg-dark">
-                <div class="card-body">
-                    <table class="table table-dark table-bordered mb-0">
-                        <tbody>
-                            <tr>
-                                <td rowspan="2" style="width:120px;" class="align-middle text-center"><h4>Ground</h4></td>
-                                <td class="align-middle text-center" v-for="n in 5">
-                                    <template v-if="cards[n-1] != null">
-                                        <RouterLink :to="{ name: 'cardDetails', params: { id: cards[n-1].id }}" aria-current="page" target="_blank">
-                                            <img class="my-2" :src="getCardPictureUrl(cards[n-1].id)" :alt="cards[n-1].name" />
-                                        </RouterLink>
-                                    </template>
-                                    <span v-else class="text-center">Slot {{ n }}</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td v-for="n in 5">
-                                    <form action="#" method="POST" @submit="setCard(n-1, $event)">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control form-control" name="card_id" placeholder="Card number" :value="card_ids[n-1]" />
-                                            <button class="btn btn-secondary" type="button" @click="removeCard(n-1)"><i class="fas fa-times"></i></button>
-                                            <button class="btn btn-primary" type="submit"><i class="fas fa-arrow-turn-up"></i></button>
-                                        </div>
-                                    </form>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+        
+        <div class="row mb-2">
+            <div class="col-12">
+                <div class="card bg-dark">
+                    <div class="card-body">
+                        <table class="table table-dark table-bordered mb-0">
+                            <tbody>
+                                <tr>
+                                    <td rowspan="2" style="width:120px;" class="align-middle text-center"><h4>Ground</h4></td>
+                                    <td class="align-middle text-center" v-for="n in 5">
+                                        <template v-if="cards[n-1] != null">
+                                            <RouterLink :to="{ name: 'cardDetails', params: { id: cards[n-1].id }}" aria-current="page" target="_blank">
+                                                <img class="my-2" :src="getCardPictureUrl(cards[n-1].id)" :alt="cards[n-1].name" />
+                                            </RouterLink>
+                                        </template>
+                                        <span v-else class="text-center">Slot {{ n }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td v-for="n in 5">
+                                        <form action="#" method="POST" @submit="setCard(n-1, $event)">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control form-control" name="card_id" placeholder="Card number" :value="card_ids[n-1]" />
+                                                <button class="btn btn-secondary" type="button" @click="removeCard(n-1)"><i class="fas fa-times"></i></button>
+                                                <button class="btn btn-primary" type="submit"><i class="fas fa-arrow-turn-up"></i></button>
+                                            </div>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row mt-2">
-        <div class="col-12">
-            <div class="card bg-dark">
-                <div class="card-body">
-                    <table class="table table-dark table-bordered mb-0">
-                        <tbody>
-                            <tr>
-                                <td rowspan="2" style="width:120px;" class="align-middle text-center"><h4>Hand</h4></td>
-                                <td class="align-middle text-center" v-for="n in 5">
-                                    <template v-if="cards[n+4] != null">
-                                        <RouterLink :to="{ name: 'cardDetails', params: { id: cards[n+4].id }}" aria-current="page" target="_blank">
-                                            <img class="my-2" :src="getCardPictureUrl(cards[n+4].id)" :alt="cards[n+4].name" />
-                                        </RouterLink>
-                                    </template>
-                                    <span v-else class="text-center">Slot {{ n }}</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td v-for="n in 5">
-                                    <form action="#" method="POST" @submit="setCard(n+4, $event)">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control form-control" name="card_id" placeholder="Card number" :value="card_ids[n+4]" />
-                                            <button class="btn btn-secondary" type="button" @click="removeCard(n+4)"><i class="fas fa-times"></i></button>
-                                            <button class="btn btn-primary" type="submit"><i class="fas fa-arrow-turn-up"></i></button>
-                                        </div>
-                                    </form>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <div class="row mt-2">
+            <div class="col-12">
+                <div class="card bg-dark">
+                    <div class="card-body">
+                        <table class="table table-dark table-bordered mb-0">
+                            <tbody>
+                                <tr>
+                                    <td rowspan="2" style="width:120px;" class="align-middle text-center"><h4>Hand</h4></td>
+                                    <td class="align-middle text-center" v-for="n in 5">
+                                        <template v-if="cards[n+4] != null">
+                                            <RouterLink :to="{ name: 'cardDetails', params: { id: cards[n+4].id }}" aria-current="page" target="_blank">
+                                                <img class="my-2" :src="getCardPictureUrl(cards[n+4].id)" :alt="cards[n+4].name" />
+                                            </RouterLink>
+                                        </template>
+                                        <span v-else class="text-center">Slot {{ n }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td v-for="n in 5">
+                                        <form action="#" method="POST" @submit="setCard(n+4, $event)">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control form-control" name="card_id" placeholder="Card number" :value="card_ids[n+4]" />
+                                                <button class="btn btn-secondary" type="button" @click="removeCard(n+4)"><i class="fas fa-times"></i></button>
+                                                <button class="btn btn-primary" type="submit"><i class="fas fa-arrow-turn-up"></i></button>
+                                            </div>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <hr />
+        <hr />
 
-    <div class="row" v-if="card_ids_str.length > 0">
-        <div class="col-12">
-            <div class="card bg-dark">
-                <div class="card-header">
-                    <h4>Fusion(s)</h4>
+        <div class="row" v-if="card_ids_str.length > 0">
+            <div class="col-12">
+                <div class="card bg-dark">
+                    <div class="card-header">
+                        <h4>Fusion(s)</h4>
+                    </div>
+                    <div class="card-body">
+                        <FusionComponent :cards="card_ids_str" :deck="card_ids_str" :depth="3" :display="{'step': true}" />
+                    </div>
                 </div>
-                <div class="card-body">
-                    <FusionComponent :cards="card_ids_str" :deck="card_ids_str" :depth="3" :display="{'step': true}" />
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card bg-dark">
+                    <div class="card-header">
+                        <h4>Guardian Stars</h4>
+                    </div>
+                    <div class="card-body">
+                        <GuardianStarComponent />
+                    </div>
                 </div>
             </div>
         </div>

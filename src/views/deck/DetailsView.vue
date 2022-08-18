@@ -127,10 +127,10 @@
 
         <form action="#" method="POST" @submit="addCard($event)">
             <div class="d-flex flex-column flex-md-row m-2">
-                <div class="me-2">
+                <div class="me-4 mb-2">
                     <input type="text" class="form-control form-control-lg" name="card_number" v-model="new_card_number" placeholder="Card number" />
                 </div>
-                <div class="ms-2">
+                <div>
                     <button class="btn btn-primary btn-lg" type="submit"><i class="fas fa-plus"></i> Add card to deck</button>
                 </div>
             </div>

@@ -54,7 +54,7 @@ const router = createRouter({
     {
       path: '/stars',
       name: 'stars',
-      component: () => import('../views/StarsView.vue')
+      component: () => import('../views/GuardianStarsView.vue')
     },
     
     {

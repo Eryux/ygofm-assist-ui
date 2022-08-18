@@ -1,10 +1,9 @@
 <script setup>
-  import Cookies from 'js-cookie'
-  import { RouterLink, RouterView } from 'vue-router'
-  import Sidebar from '@/components/Sidebar.vue'
+  import { RouterView } from 'vue-router'
+  import SidebarComponent from '@/components/SidebarComponent.vue'
   import { SendRequest } from './request.js'
   import { db } from './database.js'
-  import { userdata, LoadUserdata } from './storage.js'
+  import { LoadUserdata } from './storage.js'
 </script>
 
 <script>
@@ -53,7 +52,7 @@
 <template>
   <main>
     <!-- Sidebar -->
-    <Sidebar />
+    <SidebarComponent />
 
     <!-- Page Content -->
     <section class="d-flex flex-column text-light">
