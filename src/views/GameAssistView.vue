@@ -10,9 +10,9 @@
 export default {
         data() {
             return {
-                card_ids: ["", "", "", "", "", "", "", "", "", ""],
+                card_ids: ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
                 card_ids_str: "",
-                cards: [null, null, null, null, null, null, null, null],
+                cards: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
                 userdata,
                 db
             }
@@ -129,7 +129,7 @@ export default {
                                                 <img class="my-2" :src="getCardPictureUrl(cards[n-1].id)" :alt="cards[n-1].name" />
                                             </RouterLink>
                                         </template>
-                                        <span v-else class="text-center">Slot {{ n }}</span>
+                                        <span v-else class="text-center"><img class="my-2" :src="getCardPictureUrl(0)" :alt="'Slot ' + n" /></span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -157,14 +157,14 @@ export default {
                         <table class="table table-dark table-bordered mb-0">
                             <tbody>
                                 <tr>
-                                    <td rowspan="2" style="width:120px;" class="align-middle text-center"><h4>Hand</h4></td>
+                                    <td rowspan="2" style="width:120px;" class="align-middle text-center"><h4>Magics &amp; Traps</h4></td>
                                     <td class="align-middle text-center" v-for="n in 5">
                                         <template v-if="cards[n+4] != null">
                                             <RouterLink :to="{ name: 'cardDetails', params: { id: cards[n+4].id }}" aria-current="page" target="_blank">
                                                 <img class="my-2" :src="getCardPictureUrl(cards[n+4].id)" :alt="cards[n+4].name" />
                                             </RouterLink>
                                         </template>
-                                        <span v-else class="text-center">Slot {{ n }}</span>
+                                        <span v-else class="text-center"><img class="my-2" :src="getCardPictureUrl(0)" :alt="'Slot ' + n" /></span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -173,6 +173,41 @@ export default {
                                             <div class="input-group">
                                                 <input type="text" class="form-control form-control" name="card_id" placeholder="Card number" :value="card_ids[n+4]" />
                                                 <button class="btn btn-secondary" type="button" @click="removeCard(n+4)"><i class="fas fa-times"></i></button>
+                                                <button class="btn btn-primary" type="submit"><i class="fas fa-arrow-turn-up"></i></button>
+                                            </div>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card bg-dark">
+                    <div class="card-body">
+                        <table class="table table-dark table-bordered mb-0">
+                            <tbody>
+                                <tr>
+                                    <td rowspan="2" style="width:120px;" class="align-middle text-center"><h4>Hand</h4></td>
+                                    <td class="align-middle text-center" v-for="n in 5">
+                                        <template v-if="cards[n+9] != null">
+                                            <RouterLink :to="{ name: 'cardDetails', params: { id: cards[n+9].id }}" aria-current="page" target="_blank">
+                                                <img class="my-2" :src="getCardPictureUrl(cards[n+9].id)" :alt="cards[n+9].name" />
+                                            </RouterLink>
+                                        </template>
+                                        <span v-else class="text-center"><img class="my-2" :src="getCardPictureUrl(0)" :alt="'Slot ' + n" /></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td v-for="n in 5">
+                                        <form action="#" method="POST" @submit="setCard(n+9, $event)">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control form-control" name="card_id" placeholder="Card number" :value="card_ids[n+9]" />
+                                                <button class="btn btn-secondary" type="button" @click="removeCard(n+9)"><i class="fas fa-times"></i></button>
                                                 <button class="btn btn-primary" type="submit"><i class="fas fa-arrow-turn-up"></i></button>
                                             </div>
                                         </form>
