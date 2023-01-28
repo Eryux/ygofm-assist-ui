@@ -70,6 +70,8 @@
                         this.pool = this.pool.sort((a, b) => b["defense"] - a["defense"]);
                     } else if (this.sort == "level") {
                         this.pool = this.pool.sort((a, b) => b["level"] - a["level"]);
+                    } else if (this.sort == "cost") {
+                        this.pool = this.pool.sort((a, b) => b["cost"] - a["cost"]);
                     } else {
                         this.pool = this.pool.sort((a, b) => parseInt(b["id"]) - parseInt(a["id"])); // by id
                     }
@@ -86,6 +88,8 @@
                         this.pool = this.pool.sort((a, b) => a["defense"] - b["defense"]);
                     } else if (this.sort == "level") {
                         this.pool = this.pool.sort((a, b) => a["level"] - b["level"]);
+                    } else if (this.sort == "cost") {
+                        this.pool = this.pool.sort((a, b) => a["cost"] - b["cost"]);
                     } else {
                         this.pool = this.pool.sort((a, b) => parseInt(a["id"]) - parseInt(b["id"])); // by id
                     }
@@ -123,6 +127,7 @@
                     <option value="attack">Attack</option>
                     <option value="defense">Defense</option>
                     <option value="level">Level</option>
+                    <option value="cost">Cost</option>
                 </select>
             </div>
         </div>

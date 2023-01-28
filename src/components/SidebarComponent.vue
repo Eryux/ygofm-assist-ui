@@ -7,7 +7,7 @@
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark sidebar">
         <a href="/" class="d-flex flex-column justify-content-center text-center mb-3 mb-md-0 me-md-auto text-decoration-none">
             <div><img :src="imgLogo" alt="logo" class="logo" /></div>
-            <p class="fs-4 text-white d-none d-lg-inline mt-4">Yu-Gi-Oh! Forbidden Memory - Assist</p>
+            <p class="fs-4 text-white d-none d-lg-inline mt-4">Yu-Gi-Oh! Forbidden Memory - Helper</p>
         </a>
 
         <hr>
@@ -61,6 +61,6 @@
 
         <hr>
 
-        <p class="text-muted text-center m-0">v1.0.0</p>
+        <p class="text-muted text-center m-0"><a href="https://github.com/Eryux/ygofm-assist-ui" target="_blank">GitHub</a> - v1.0.0</p>
     </div>
 </template>
