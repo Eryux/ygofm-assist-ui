@@ -28,3 +28,4 @@ coverage
 
 # Fusion Tools
 src/assets/cards/*.png
+public/cards/*.png

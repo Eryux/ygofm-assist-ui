@@ -1,29 +1,94 @@
-# yugiohfm
+# YGOFM - Helper
 
-This template should help get you started developing with Vue 3 in Vite.
+YGOFM Helper is a cards and fusions database and web application based on vueJS for PSX game Yu-Gi-Oh! Forbidden Memory released in 1999. This repository contain the source code and data for running the application, if just want to use the application you can go on https://ygofm.bark.tf/.
 
-## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.vscode-typescript-vue-plugin).
+## Features
 
-## Customize configuration
+- Database and a browsing interface for all in game cards with their fusions
+- Deck creation and management system
+- Guardians star sheet with their symbols, strength and weakness
+- An assist tool that mimics game board and display the fusions that can be done during the player turn with its cards
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+It's time to duel!
 
-## Project Setup
+---
 
-```sh
-npm install
+## Getting Started
+
+This section is only if you want to run your own instance of YGOFM Helper, if you only attend to use it you can go on https://ygofm.bark.tf/.
+
+
+### Prerequisites
+
+Before doing anything be sure to have Node.js installed on your computer. For more information about nodejs visit the [official website](https://nodejs.org/en/).
+
+Then update your node packet manager to the latest version using `npm install npm@latest -g`.
+
+
+### Setup
+
+By default, card visuals are not included because they are not compatible with the open source license. If you want to include them in your instance, you can [download them here](https://ygofm.bark.tf/cards.zip).
+
+- Clone the repository locally on your computer or download and un-zip the last version of it on your computer.
+  
+- Open a terminal at the root of the project folder and install npm packages with the command `npm install`.
+
+- (optional) If you have downloaded card visuals, extract the archive inside `src/assets` folder to include it in your project instance.
+
+
+### Run
+
+- To run the project in developement mode use the command `npm run dev`.
+
+
+### Build
+
+- To build the project use the command `npm build`.
+- To test the build use the command `npm run preview`.
+
+Important: You may have to edit `index.html` file of your build result is `dist` folder to change the website url by your own url.
+
+for example -
+```html
+<script type="text/javascript">
+    var siteUrl = "https://ygofm.bark.tf/"
+</script>
 ```
 
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
+instead of -
+```html
+<script type="text/javascript">
+    var siteUrl = "http://localhost:3030/"
+</script>
 ```
 
-### Compile and Minify for Production
+---
 
-```sh
-npm run build
-```
+## Contributing
+
+Contributing is always welcome. 
+If you want to help and this project by contributing and its developement, by reporting bugs, errors or mistakes or simply by giving your feedback, you the [issues section](https://github.com/Eryux/ygofm-assist-ui/issues). Before posting or doing anything be sure to read the CONTRIBUTING.md which include basic contribution guideline.
+
+---
+
+## Credits
+
+Nicolas C. (Eryux) - **Author**
+
+
+This project also uses the following open source packages :
+
+- [VueJS](https://github.com/vuejs)
+- [Bootstrap](https://github.com/twbs/bootstrap)
+- [jQuery](https://github.com/jquery/jquery)
+- [FortAwesome](https://github.com/FortAwesome/Font-Awesome)
+- [js-cookie](https://github.com/js-cookie/js-cookie)
+- [SASS](https://github.com/sass/sass)
+- [UUID](https://github.com/uuidjs/uuid)
+
+---
+
+## License
+
+This project and application is distributed under LGPLv3 License. See LICENSE for more information.
