@@ -27,7 +27,7 @@
         LoadUserdata('userdata');
 
         this.dataLoadStatusText = "Loading database";
-        SendRequest("GET", siteUrl + "src/assets/data.min.json", null, this.dataReceived);
+        SendRequest("GET", siteUrl + "/data.min.json", null, this.dataReceived);
       },
       dataReceived(status, response) {
         if (status == 200) {

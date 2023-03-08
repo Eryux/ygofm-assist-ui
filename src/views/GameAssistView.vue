@@ -54,7 +54,7 @@ export default {
                 }
             },
             getCardPictureUrl(card_id) {
-                return new URL('../assets/cards/' + card_id + '.png', import.meta.url).href;
+                return '/cards/' + card_id + '.png';
             },
             setCard(slot, event) {
                 event.preventDefault();

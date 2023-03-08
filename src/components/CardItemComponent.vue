@@ -28,7 +28,7 @@
                 return (this.card["fusions"] != null) ? this.card["fusions"].length : 0;
             },
             cardPictureUrl() {
-                return new URL('../assets/cards/' + this.card["id"] + '.png', import.meta.url).href;
+                return '/cards/' + this.card["id"] + '.png';
             }
         },
         created: function()
