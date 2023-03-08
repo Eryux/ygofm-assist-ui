@@ -142,7 +142,7 @@
                                 <p>2022-08-19</p>
                                 <ul>
                                     <li>
-                                        <p><i>Alpha version with cards, decks, guardians and assit sections.</i></p>
+                                        <p><i>Alpha version with cards, decks, guardians and assist sections.</i></p>
                                     </li>
                                 </ul>
                             </ul>
