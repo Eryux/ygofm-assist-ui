@@ -24,8 +24,8 @@
                     <div class="col-12 mt-2">
                         <div class="card bg-dark">
                             <div class="card-body">
-                                <h4>How its work ?</h4>
-                                <p>The website has a complete list of in-game cards, their data and also tools that may be usefull
+                                <h4>How does it work?</h4>
+                                <p>The website has a complete list of in-game cards, their data, and tools that may be useful
                                     for your gaming experience.</p>
 
                                 <ul>
@@ -38,12 +38,12 @@
                                             fusions available with or to summon this card.</p>
                                     </li>
                                     <li>
-                                        <p>The <strong>Decks</strong> section allow you to <strong>create and manage
+                                        <p>The <strong>Decks</strong> section allows you to <strong>create and manage
                                                 card decks</strong>. You can <strong>create a deck, add or remove
                                                 cards</strong> from it within the limit of 40 cards and <strong>view
-                                                fusions</strong> that its possible to perform with the deck. If your
+                                                fusions</strong> that it's possible to perform with the deck. If your
                                             cookies are enabled, decks will be saved locally on your computer and will 
-                                            persists even after closing your browser.</p>
+                                            persist even after closing your browser.</p>
                                     </li>
                                     <li>
                                         <p>The <strong>Guardian Stars</strong> section is a reference sheet for
@@ -51,11 +51,11 @@
                                                 weakness</strong>.</p>
                                     </li>
                                     <li>
-                                        <p>The <strong>Game Assits</strong> section is a tool that mimics your side of a
+                                        <p>The <strong>Game Assist</strong> section is a tool that mimics your side of a
                                             game board during a duel. It will <strong>show you fusions that you can do
                                                 during your turn</strong> simply by entering the cards that you have in
-                                            your hand and on ground. It's quick and easy to use during a game avoiding
-                                            time lost of browsing the cards database.</p>
+                                            your hand and on the ground. It's quick and easy to use during a game, avoiding
+                                            wasted time browsing the cards database.</p>
                                     </li>
                                 </ul>
 
@@ -70,12 +70,12 @@
                                 <h4>About</h4>
                                 <p>As it's said on the top of the page, it's a fan made project, <strong>it's not associated
                                         with Konami or any third-party of Yu-Gi-Oh! license</strong>.</p>
-                                <p><strong>This project is completely free and distributed under LGPLv3 licence</strong>
-                                    with the exception of cards visuals and third-party libraries with their own license.
+                                <p><strong>This project is completely free and distributed under LGPLv3 license</strong>
+                                    with the exception of card visuals and third-party libraries with their own license.
                                     You can find much more information about the project on its <a
                                         href="https://github.com/Eryux/ygofm-assist-ui" target="_blank">GitHub</a>
-                                    repository. The project is mainly maintened by one person on their spare time, update
-                                    and fixes may take longer to complete and without any guarantee that they will
+                                    repository. The project is mainly maintained by one person on their spare time, and updates
+                                    and fixes may take longer to complete without any guarantee that they will
                                     work for all devices.</p>
 
                                 <p>&nbsp;</p>
@@ -107,8 +107,8 @@
                                             <strong>contact@bark.tf</strong>,</p>
                                     </li>
                                 </ul>
-                                <p>Again this project is mostly maintened by a single person on his spare time, getting an
-                                    answer will sometimes take time so be patient.</p>
+                                <p>Again, this project is mostly maintained by a single person on their spare time. Getting an
+                                    answer will sometimes take time, so please be patient.</p>
                             </div>
                         </div>
                     </div>
@@ -123,26 +123,37 @@
                         <div class="card-body">
                             <h5>Changelogs</h5>
                             <ul>
-                                <p>2023-03-10 (current)</p>
-                                <ul>
+                                <p>2026-02-22</p>
+                                <ul class="fst-italic">
+                                    <li><p>Version 1.1.0</p></li>
+                                    <li><p>Fix invalid fusion bug</p></li>
+                                    <li><p>Add "Fusion Potential by Card" on Deck Fusions page</p></li>
+                                    <li><p>Sort cards from greatest to least fusion count</p></li>
+                                    <li><p>Add deck dropdown in "Fusion(s) using ..."</p></li>
+                                    <li><p>Filter fusion list by selected deck (or all cards)</p></li>
+                                </ul>
+                            </ul>
+                            <ul>
+                                <p>2023-03-10</p>
+                                <ul class="fst-italic">
                                     <li>
-                                        <p><i>Release version 1.0.0</i></p>
+                                        <p>Version 1.0.0</p>
                                     </li>
                                 </ul>
                             </ul>
                             <ul>
                                 <p>2023-01-28</p>
-                                <ul>
+                                <ul class="fst-italic">
                                     <li>
-                                        <p><i>Fix incorrect guardian stars on cards.</i></p>
+                                        <p>Fix incorrect guardian stars on cards.</p>
                                     </li>
                                 </ul>
                             </ul>
                             <ul>
                                 <p>2022-08-19</p>
-                                <ul>
+                                <ul class="fst-italic">
                                     <li>
-                                        <p><i>Alpha version with cards, decks, guardians and assist sections.</i></p>
+                                        <p>Alpha version with cards, decks, guardians and assist sections.</p>
                                     </li>
                                 </ul>
                             </ul>
