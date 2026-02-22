@@ -3,14 +3,17 @@
  * Removes meta tags, scripts, ads, navigation, footer, etc.
  *
  * Usage: node scripts/combine-yugipedia-fusions.js
- * Reads: yugipedia-fusions-001-200.html, 201-400, 401-600, 601-722
- * Writes: yugipedia-fusions-combined.html
+ * Reads: yugipedia/yugipedia-fusions-001-200.html, 201-400, 401-600, 601-722
+ * Writes: yugipedia/yugipedia-fusions-combined.html
+ *
+ * Run scripts/fetch-yugipedia-pages.js first to download the source HTML files.
  */
 
 const fs = require('fs');
 const path = require('path');
 
 const PROJECT_ROOT = path.join(__dirname, '..');
+const YUGIPEDIA_DIR = path.join(PROJECT_ROOT, 'yugipedia');
 
 const FUSION_FILES = [
     'yugipedia-fusions-001-200.html',
@@ -86,7 +89,7 @@ ${navStyle}
     let allSections = [];
 
     for (let i = 0; i < FUSION_FILES.length; i++) {
-        const filePath = path.join(PROJECT_ROOT, FUSION_FILES[i]);
+        const filePath = path.join(YUGIPEDIA_DIR, FUSION_FILES[i]);
         if (!fs.existsSync(filePath)) {
             console.warn(`Skipping ${FUSION_FILES[i]} (not found)`);
             continue;
@@ -110,7 +113,7 @@ ${navStyle}
 </html>`;
 
     const output = head + '\n' + allSections.join('\n\n') + footer;
-    const outPath = path.join(PROJECT_ROOT, 'yugipedia-fusions-combined.html');
+    const outPath = path.join(YUGIPEDIA_DIR, 'yugipedia-fusions-combined.html');
     fs.writeFileSync(outPath, output, 'utf8');
 
     console.log(`\nWritten to ${outPath}`);

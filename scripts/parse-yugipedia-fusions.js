@@ -8,9 +8,9 @@
  * Usage: node scripts/parse-yugipedia-fusions.js [--dry-run]
  *        node scripts/parse-yugipedia-fusions.js [path/to/html] [--dry-run]
  *
- * By default reads: yugipedia-fusions-combined.html (project root)
- * Run scripts/combine-yugipedia-fusions.js first to generate it from the
- * individual Yugipedia HTML files.
+ * By default reads: yugipedia/yugipedia-fusions-combined.html
+ * Run scripts/fetch-yugipedia-pages.js then scripts/combine-yugipedia-fusions.js
+ * to download and generate the combined file from the source HTML.
  *
  * Use --dry-run to preview without writing to data.json.
  */
@@ -21,7 +21,7 @@ const path = require('path');
 const PROJECT_ROOT = path.join(__dirname, '..');
 const DATA_JSON = path.join(PROJECT_ROOT, 'public', 'data.json');
 const DATA_MIN_JSON = path.join(PROJECT_ROOT, 'public', 'data.min.json');
-const FUSION_COMBINED = path.join(PROJECT_ROOT, 'yugipedia-fusions-combined.html');
+const FUSION_COMBINED = path.join(PROJECT_ROOT, 'yugipedia', 'yugipedia-fusions-combined.html');
 
 /** Normalize id to match data.json format (strip leading zeros). */
 function normalizeId(id) {
@@ -171,9 +171,11 @@ function main() {
         console.error(`HTML file not found: ${htmlPath}`);
         console.error('');
         console.error('To use this script:');
-        console.error('  1. Run: node scripts/combine-yugipedia-fusions.js');
-        console.error('     (generates yugipedia-fusions-combined.html from the 4 source files)');
-        console.error('  2. Run: node scripts/parse-yugipedia-fusions.js');
+        console.error('  1. Run: node scripts/fetch-yugipedia-pages.js');
+        console.error('     (downloads Yugipedia HTML into the yugipedia/ folder)');
+        console.error('  2. Run: node scripts/combine-yugipedia-fusions.js');
+        console.error('     (generates yugipedia/yugipedia-fusions-combined.html)');
+        console.error('  3. Run: node scripts/parse-yugipedia-fusions.js');
         console.error('');
         console.error('Or: node scripts/parse-yugipedia-fusions.js path/to/yugipedia-fusions-combined.html');
         console.error('Add --dry-run to preview without updating data.json');
