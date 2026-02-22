@@ -1,6 +1,7 @@
 <script setup>
     import { RouterLink } from 'vue-router'
     import { db } from '../database.js'
+    import { userdata } from '../storage.js'
 </script>
 
 <script>
@@ -17,6 +18,7 @@
                 filter_cards: [],
                 filter_results: [],
                 filter_deck: [],
+                selected_deck_id: '',
                 filter_depth: 1,
                 columns: {'step': true, 'result': true, 'result_stats': true, 'filter': true},
                 sort: 'id',
@@ -24,7 +26,13 @@
                 fusions: [],
                 filtered_fusions: [],
                 loading: false,
-                db
+                db,
+                userdata
+            }
+        },
+        computed: {
+            showDeckFilter() {
+                return !this.deck && this.columns.filter;
             }
         },
         created()
@@ -35,14 +43,10 @@
             if (this.results != null && this.results.length > 0)
                 this.filter_results = this.results.split(',');
 
-            if (this.deck != null && this.deck.length > 0)
-                this.filter_deck = this.deck.split(',');
-
             if (this.depth != null)
                 this.filter_depth = this.depth;
 
-            if (this.filter_deck.length == 0)
-                this.filter_deck = this.db.data["cards"].map(x => x["id"]);
+            this.applyDeckFilter();
 
             if (this.display != null) {
                 this.columns['step'] = ('step' in this.display) ? this.display.step : true;
@@ -60,12 +64,7 @@
                 this.runFusionCalc();
             },
             deck(newValue, oldValue) {
-                if (newValue != null)
-                    this.filter_deck = this.deck.split(',');
-
-                if (this.filter_deck.length == 0)
-                    this.filter_deck = this.db.data["cards"].map(x => x["id"]);
-
+                this.applyDeckFilter();
                 this.runFusionCalc();
             },
             results(newValue, oldValue) {
@@ -75,6 +74,16 @@
             }
         },
         methods: {
+            applyDeckFilter() {
+                if (this.deck != null && this.deck.length > 0) {
+                    this.filter_deck = this.deck.split(',');
+                } else if (this.selected_deck_id && this.userdata?.data?.decks) {
+                    const deck = this.userdata.data.decks.find(d => d.id === this.selected_deck_id);
+                    this.filter_deck = (deck?.cards) ? deck.cards : [];
+                } else {
+                    this.filter_deck = this.db.data["cards"].map(x => x["id"]);
+                }
+            },
             runFusionCalc() {
                 let self = this;
                 self.loading = true;
@@ -114,15 +123,18 @@
 
                     for (let j = 0; j < card["fusions"].length; ++j)
                     {
+                        const resultId = card["fusions"][j][1];
+                        if (resultId === card_idx || resultId === card["fusions"][j][0]) continue; // result cannot equal a material
                         if (deck.indexOf(card["fusions"][j][0]) != -1)
                         {
-                            this.fusions.push([card, this.retrieveCard(card["fusions"][j][0]), this.retrieveCard(card["fusions"][j][1]), depth]);
+                            const resultCard = this.retrieveCard(resultId);
+                            this.fusions.push([card, this.retrieveCard(card["fusions"][j][0]), resultCard, depth]);
 
                             if (depth < this.filter_depth)
                             {
                                 let deck_copy = [...deck];
                                 deck_copy.splice(deck_copy.indexOf(card["fusions"][j][0]), 1);
-                                this.calculateFusionByCard([card["fusions"][j][1]], deck_copy, depth + 1);
+                                this.calculateFusionByCard([resultId], deck_copy, depth + 1);
                             }
                         }
                     }
@@ -141,9 +153,12 @@
                     {
                         for (let k = 0; k < pool[j]["fusions"].length; ++k)
                         {
-                            if (pool[j]["fusions"][k][1] == cards[i] && (deck.length == 0 || deck.indexOf(pool[j]["fusions"][k][0]) != -1))
+                            const resultId = pool[j]["fusions"][k][1];
+                            const mat2Id = pool[j]["fusions"][k][0];
+                            if (resultId === pool[j]["id"] || resultId === mat2Id) continue; // result cannot equal a material
+                            if (resultId == cards[i] && (deck.length == 0 || deck.indexOf(mat2Id) != -1))
                             {
-                                this.fusions.push([pool[j], this.retrieveCard(pool[j]["fusions"][k][0]), this.retrieveCard(pool[j]["fusions"][k][1]), 1]);
+                                this.fusions.push([pool[j], this.retrieveCard(mat2Id), this.retrieveCard(resultId), 1]);
                             }
                         }
                     }
@@ -215,6 +230,15 @@
         </div>
         <template v-else>
             <div class="row mt-2 mb-4" v-if="columns.filter">
+                <div class="col-md-2 col-6 mb-2" v-if="showDeckFilter">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa fa-layer-group"></i></span>
+                        <select class="form-select form-select-lg" v-model="selected_deck_id" @change="applyDeckFilter(); runFusionCalc()">
+                            <option value="">All cards</option>
+                            <option v-for="deck in (userdata?.data?.decks ?? [])" :key="deck.id" :value="deck.id">{{ deck.name }}</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="col-md-3 col-8 mb-2">
                     <div class="input-group">
                         <span class="input-group-text"><i class="fa fa-sort"></i></span>

@@ -63,6 +63,25 @@ instead of -
 </script>
 ```
 
+### Updating fusion data from Yugipedia
+
+Fusion data is parsed from Yugipedia. The HTML pages are not stored in the repo. To retrieve and update the data:
+
+1. **Fetch** the Yugipedia pages into a local `yugipedia/` folder (this folder is in `.gitignore`):
+   ```bash
+   node scripts/fetch-yugipedia-pages.js
+   ```
+2. **Combine** the HTML files into a single file:
+   ```bash
+   node scripts/combine-yugipedia-fusions.js
+   ```
+3. **Parse** the combined HTML and update `public/data.json` (and `public/data.min.json`):
+   ```bash
+   node scripts/parse-yugipedia-fusions.js
+   ```
+   Use `--dry-run` to preview changes without writing:  
+   `node scripts/parse-yugipedia-fusions.js --dry-run`
+
 ---
 
 ## Contributing

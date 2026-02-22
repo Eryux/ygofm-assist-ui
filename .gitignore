@@ -29,3 +29,6 @@ coverage
 # Fusion Tools
 src/assets/cards/*.png
 public/cards/*.png
+
+# Yugipedia HTML (fetched by scripts/fetch-yugipedia-pages.js)
+yugipedia/
