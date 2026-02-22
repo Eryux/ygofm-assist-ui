@@ -219,16 +219,18 @@ export default {
             <option v-for="name in handCardOptions" :key="name" :value="name" />
         </datalist>
     
-        <div class="d-flex flex-column flex-md-row mb-4 mt-2 flex-wrap gap-2 align-items-center">
+        <div class="d-flex flex-column flex-md-row mb-4 mt-2 flex-wrap gap-2 align-items-center justify-content-between">
             <div class="me-2">
                 <button class="btn btn-primary btn-lg" :onclick="resetGame"><i class="fas fa-refresh"></i> Start new game</button>
             </div>
-            <div class="d-flex align-items-center gap-2">
-                <label class="text-light mb-0">Deck (limits Hand selection):</label>
-                <select class="form-select form-select-lg" style="max-width:200px" v-model="selected_deck_id" @change="selectDeck">
-                    <option value="">Any card in Hand</option>
-                    <option v-for="d in decks" :key="d.id" :value="d.id">{{ d.name }} ({{ d.cards?.length || 0 }})</option>
-                </select>
+            <div class="gap-2">
+                <div class="input-group">
+                    <span class="input-group-text">Deck (limits Hand selection)</span>
+                    <select class="form-select form-select-lg" v-model="selected_deck_id" @change="selectDeck">
+                        <option value="">Any card in Hand</option>
+                        <option v-for="d in decks" :key="d.id" :value="d.id">{{ d.name }} ({{ d.cards?.length || 0 }})</option>
+                    </select>
+                </div>
             </div>
         </div>
         
