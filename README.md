@@ -1,6 +1,6 @@
 # YGOFM - Helper
 
-YGOFM Helper is a cards and fusions database and a webapp based on vueJS for PSX game Yu-Gi-Oh! Forbidden Memory released in 1999. This repository contains the source code and data to run the application, if just want to use the app you can go on https://ygofm.bark.tf/.
+YGOFM Helper is a cards and fusions database and a webapp based on VueJS for the PSX game Yu-Gi-Oh! Forbidden Memory released in 1999. This repository contains the source code and data to run the application. If you just want to use the app, you can visit https://ygofm.bark.tf/.
 
 
 ## Features
@@ -12,18 +12,17 @@ YGOFM Helper is a cards and fusions database and a webapp based on vueJS for PSX
 
 It's time to duel!
 
----
 
 ## Getting Started
 
-This section is only if you want to run your own instance of YGOFM Helper, if you only attend to use it you can go on https://ygofm.bark.tf/.
+This section is only if you want to run your own instance of YGOFM Helper. If you only intend to use it, you can visit https://ygofm.bark.tf/.
 
 
 ### Prerequisites
 
 Before doing anything make sure to have Node.js installed on your computer. For more information about nodejs visit the [official website](https://nodejs.org/en/).
 
-Then update your node packet manager to the latest version using `npm install npm@latest -g`.
+Then update your Node package manager to the latest version using `npm install npm@latest -g`.
 
 
 ### Setup
@@ -39,24 +38,24 @@ By default, card visuals are not included as they are not compatible with the op
 
 ### Run
 
-- To run the project in developement mode use the command `npm run dev`.
+- To run the project in development mode, use the command `npm run dev`.
 
 
 ### Build
 
-- To build the project use the command `npm build`.
-- To test the build use the command `npm run preview`.
+- To build the project, use the command `npm run build`.
+- To test the build, use the command `npm run preview`.
 
-Important: You may need to edit `index.html` file of your build result is `dist` folder to change the website url by your own url.
+Important: After building, you may need to edit the `index.html` file in the `dist` folder to change the website URL to your own URL.
 
-for example -
+For example:
 ```html
 <script type="text/javascript">
     var siteUrl = "https://ygofm.bark.tf/"
 </script>
 ```
 
-instead of -
+Instead of:
 ```html
 <script type="text/javascript">
     var siteUrl = "http://localhost:3030/"
@@ -87,13 +86,14 @@ Fusion data is parsed from Yugipedia. The HTML pages are not stored in the repo.
 ## Contributing
 
 Contributing is always welcome. 
-If you want to help on this project by contributing on its developement, by reporting bugs, errors or mistakes or simply by giving your feedback, use the [issues section](https://github.com/Eryux/ygofm-assist-ui/issues). Before posting or doing anything be sure to read the CONTRIBUTING.md which include basic contribution guidelines.
+If you want to help on this project by contributing to its development, by reporting bugs, errors, or mistakes, or simply by giving your feedback, use the [issues section](https://github.com/Eryux/ygofm-assist-ui/issues). Before posting or doing anything, be sure to read the CONTRIBUTING.md file, which includes basic contribution guidelines.
 
 ---
 
 ## Credits
 
-Nicolas C. (Eryux) - **Author**
+- Nicolas C. / Eryux (**Author**) - [GitHub](https://github.com/Eryux)
+- Lodakia ([Add fusion tools, deck features...](https://github.com/Eryux/ygofm-assist-ui/pull/1)) - [GitHub](https://github.com/Lodakia)
 
 
 This project also uses the following open source packages :
